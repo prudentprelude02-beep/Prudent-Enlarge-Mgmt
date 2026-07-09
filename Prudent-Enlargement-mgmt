@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prudent Enlarge Management MGMT.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #e2c47a;
+      --gold-dark: #a0813a;
+      --white: #FFFFFF;
+      --grey-light: #F5F5F5;
+      --grey-mid: #CCCCCC;
+      --grey-dark: #555555;
+      --black: #1a1a1a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      background-color: var(--white);
+      color: var(--black);
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 7px; }
+    ::-webkit-scrollbar-track { background: var(--grey-light); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.97);
+      border-bottom: 2px solid var(--gold);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 60px;
+      box-shadow: 0 2px 20px rgba(201,168,76,0.12);
+      transition: all 0.3s ease;
+    }
+
+    .logo-wrap {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .logo-main {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--black);
+      letter-spacing: 1px;
+    }
+
+    .logo-main span {
+      color: var(--gold);
+    }
+
+    .logo-sub {
+      font-size: 0.65rem;
+      color: var(--grey-dark);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 36px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--black);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--white) !important;
+      padding: 9px 22px;
+      border-radius: 3px;
+      transition: background 0.3s, transform 0.2s !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--gold-dark) !important;
+      transform: translateY(-1px);
+      color: var(--white) !important;
+    }
+
+    .nav-cta::after { display: none !important; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 25px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 50%, #1a1a1a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 120px 20px 80px;
+    }
+
+    .hero-bg-pattern {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(201,168,76,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(201,168,76,0.06) 0%, transparent 50%);
+    }
+
+    .hero-deco {
+      position: absolute;
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 50%;
+    }
+
+    .hero-deco-1 { width: 500px; height: 500px; top: -100px; left: -150px; }
+    .hero-deco-2 { width: 350px; height: 350px; bottom: -80px; right: -80px; }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(201,168,76,0.15);
+      border: 1px solid rgba(201,168,76,0.4);
+      color: var(--gold-light);
+      font-size: 0.72rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      padding: 7px 20px;
+      border-radius: 30px;
+      margin-bottom: 28px;
+      font-weight: 600;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .hero h1 span {
+      color: var(--gold);
+      display: block;
+    }
+
+    .hero-divider {
+      width: 70px;
+      height: 3px;
+      background: linear-gradient(to right, var(--gold), var(--gold-light));
+      margin: 24px auto;
+      border-radius: 2px;
+    }
+
+    .hero-motto {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      color: var(--gold-light);
+      letter-spacing: 3px;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      color: var(--grey-mid);
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 580px;
+      margin: 0 auto 40px;
+      font-weight: 300;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: var(--white);
+      padding: 14px 36px;
+      border-radius: 3px;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(201,168,76,0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(201,168,76,0.5);
+    }
+
+    .btn-outline {
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      padding: 14px 36px;
+      border-radius: 3px;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+
+    .btn-outline:hover {
+      background: var(--gold);
+      color: var(--white);
+      transform: translateY(-3px);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(201,168,76,0.6);
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
+
+    .hero-scroll i { font-size: 1rem; }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ===== STATS STRIP ===== */
+    .stats-strip {
+      background: var(--gold);
+      padding: 30px 60px;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .stat-item {
+      text-align: center;
+      color: var(--white);
+    }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.9;
+      font-weight: 500;
+    }
+
+    /* ===== SECTION SHARED ===== */
+    section {
+      padding: 100px 60px;
+    }
+
+    .section-tag {
+      font-size: 0.7rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 16px;
+      line-height: 1.25;
+    }
+
+    .section-title span { color: var(--gold); }
+
+    .gold-line {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(to right, var(--gold), var(--gold-light));
+      border-radius: 2px;
+      margin-bottom: 30px;
+    }
+
+    .gold-line.center { margin: 0 auto 30px; }
+
+    /* ===== ABOUT ===== */
+    #about {
+      background: var(--grey-light);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 70px;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .about-img-wrap {
+      position: relative;
+    }
+
+    .about-img-box {
+      background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+      border-radius: 4px;
+      height: 460px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .about-img-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 40% 40%, rgba(201,168,76,0.15), transparent 60%);
+    }
+
+    .about-icon-center {
+      font-size: 5rem;
+      color: var(--gold);
+      opacity: 0.85;
+      z-index: 1;
+      position: relative;
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 110px;
+      height: 110px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      box-shadow: 0 8px 30px rgba(201,168,76,0.45);
+    }
+
+    .about-badge-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .about-badge-text {
+      font-size: 0.6rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .about-deco-line {
+      position: absolute;
+      top: 20px;
+      left: -20px;
+      width: 3px;
+      height: 80px;
+      background: var(--gold);
+    }
+
+    .about-text p {
+      color: var(--grey-dark);
+      line-height: 1.9;
+      margin-bottom: 18px;
+      font-size: 0.97rem;
+      font-weight: 400;
+    }
+
+    .about-values {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .value-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--black);
+    }
+
+    .value-item i {
+      color: var(--gold);
+      font-size: 0.85rem;
+    }
+
+    /* ===== SERVICES ===== */
+    #services {
+      background: var(--white);
+    }
+
+    .services-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 60px;
+    }
+
+    .services-header p {
+      color: var(--grey-dark);
+      font-size: 0.97rem;
+      line-height: 1.8;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--white);
+      border: 1px solid #e8e8e8;
+      border-radius: 4px;
+      padding: 38px 30px;
+      transition: all 0.35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(to right, var(--gold), var(--gold-light));
+      transition: width 0.4s ease;
+    }
+
+    .service-card:hover {
+      box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+      transform: translateY(-6px);
+      border-color: rgba(201,168,76,0.3);
+    }
+
+    .service-card:hover::before { width: 100%; }
+
+    .service-icon {
+      width: 58px;
+      height: 58px;
+      background: rgba(201,168,76,0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px;
+      transition: background 0.3s;
+    }
+
+    .service-card:hover .service-icon {
+      background: rgba(201,168,76,0.2);
+    }
+
+    .service-icon i {
+      font-size: 1.4rem;
+      color: var(--gold);
+    }
+
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--black);
+    }
+
+    .service-card p {
+      color: var(--grey-dark);
+      font-size: 0.88rem;
+      line-height: 1.8;
+    }
+
+    /* ===== WHY US ===== */
+    #why {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #why::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(201,168,76,0.07), transparent 65%);
+    }
+
+    #why .section-title { color: var(--white); }
+
+    #why .section-tag { color: var(--gold-light); }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .why-card {
+      padding: 36px 24px;
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+
+    .why-card:hover {
+      background: rgba(201,168,76,0.07);
+      border-color: rgba(201,168,76,0.5);
+      transform: translateY(-4px);
+    }
+
+    .why-card i {
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+
+    .why-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .why-card p {
+      color: var(--grey-mid);
+      font-size: 0.85rem;
+      line-height: 1.75;
+    }
+
+    /* ===== CONTACT ===== */
+    #contact {
+      background: var(--grey-light);
+    }
+
+    .contact-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .contact-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 18px;
+      color: var(--black);
+    }
+
+    .contact-info p {
+      color: var(--grey-dark);
+      font-size: 0.9rem;
+      line-height: 1.9;
+      margin-bottom: 30px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 22px;
+      padding: 18px 20px;
+      background: var(--white);
+      border-radius: 4px;
+      border-left: 3px solid var(--gold);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      transition: transform 0.3s;
+    }
+
+    .contact-item:hover { transform: translateX(4px); }
+
+    .contact-item-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(201,168,76,0.12);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .contact-item-icon i { color: var(--gold); font-size: 1rem; }
+
+    .contact-item-info label {
+      display: block;
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--grey-dark);
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+
+    .contact-item-info a,
+    .contact-item-info span {
+      color: var(--black);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .contact-item-info a:hover { color: var(--gold); }
+
+    /* Contact Form */
+    .contact-form-wrap {
+      background: var(--white);
+      padding: 44px 40px;
+      border-radius: 4px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.07);
+      border-top: 4px solid var(--gold);
+    }
+
+    .contact-form-wrap h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      margin-bottom: 26px;
+      color: var(--black);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--grey-dark);
+      margin-bottom: 7px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 3px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.9rem;
+      color: var(--black);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 110px; }
+
+    .form-submit {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: var(--white);
+      border: none;
+      padding: 15px 40px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-radius: 3px;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+    }
+
+    .form-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(201,168,76,0.45);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #111;
+      color: var(--white);
+      padding: 60px 60px 30px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 50px;
+      margin-bottom: 50px;
+    }
+
+    .footer-brand .logo-main { font-size: 1.3rem; }
+    .footer-brand .logo-sub { color: rgba(255,255,255,0.5); }
+
+    .footer-tagline {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--gold-light);
+      font-size: 1.05rem;
+      margin: 14px 0 16px;
+    }
+
+    .footer-brand p {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.85rem;
+      line-height: 1.8;
+      max-width: 280px;
+    }
+
+    .footer-col h4 {
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .footer-col ul { list-style: none; }
+
+    .footer-col ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-col ul li a {
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: color 0.3s;
+    }
+
+    .footer-col ul li a:hover { color: var(--gold); }
+
+    .footer-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      color: rgba(255,255,255,0.55);
+      font-size: 0.88rem;
+    }
+
+    .footer-contact-item i { color: var(--gold); font-size: 0.85rem; width: 16px; }
+
+    .footer-contact-item a {
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-contact-item a:hover { color: var(--gold); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .footer-bottom p {
+      color: rgba(255,255,255,0.35);
+      font-size: 0.8rem;
+    }
+
+    .footer-bottom span { color: var(--gold); }
+
+    .social-links {
+      display: flex;
+      gap: 12px;
+    }
+
+    .social-links a {
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .social-links a:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(201,168,76,0.08);
+    }
+
+    /* ===== WHATSAPP FLOAT ===== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 9999;
+      width: 56px;
+      height: 56px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 24px rgba(37, 211, 102, 0.5);
+      text-decoration: none;
+      color: white;
+      font-size: 1.5rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+      animation: pulse-wa 2.5s infinite;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 10px 32px rgba(37, 211, 102, 0.65);
+    }
+
+    @keyframes pulse-wa {
+      0%, 100% { box-shadow: 0 6px 24px rgba(37,211,102,0.5); }
+      50% { box-shadow: 0 6px 36px rgba(37,211,102,0.75); }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width: 1024px) {
+      nav { padding: 16px 30px; }
+      section { padding: 80px 30px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-img-box { height: 280px; }
+      .contact-wrap { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .stats-strip { padding: 30px; }
+    }
+
+    @media(max-width: 768px) {
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; right: 0; background: #fff; padding: 20px 30px; border-bottom: 2px solid var(--gold); gap: 18px; }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+      nav { padding: 16px 24px; }
+      section { padding: 70px 24px; }
+      .hero h1 { font-size: 2rem; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { padding: 50px 24px 30px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .stats-strip { padding: 24px; }
+    }
+
+    /* ===== FADE IN ANIMATION ===== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ====== NAVBAR ====== -->
+<nav id="navbar">
+  <div class="logo-wrap">
+    <div class="logo-main">Prudent <span>Enlarge</span></div>
+    <div class="logo-sub">Management MGMT.</div>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ====== HERO ====== -->
+<section class="hero" id="hero">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-deco hero-deco-1"></div>
+  <div class="hero-deco hero-deco-2"></div>
+  <div class="hero-content">
+    <div class="hero-badge">&#9670; Excellence in Management &#9670;</div>
+    <h1>Prudent Enlarge <span>Management MGMT.</span></h1>
+    <div class="hero-divider"></div>
+    <p class="hero-motto">" Prudent Talks "</p>
+    <p>Empowering individuals, teams, and organizations through strategic management, insightful advisory, and transformational coaching — crafted for those who seek clarity, growth, and lasting impact.</p>
+    <div class="hero-btns">
+      <a href="#services" class="btn-primary">Explore Services</a>
+      <a href="#contact" class="btn-outline">Get In Touch</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <i class="fas fa-chevron-down"></i>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ====== STATS STRIP ====== -->
+<div class="stats-strip">
+  <div class="stat-item">
+    <span class="stat-num">12+</span>
+    <span class="stat-label">Core Services</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">100%</span>
+    <span class="stat-label">Client Commitment</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">360°</span>
+    <span class="stat-label">Management Approach</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">1</span>
+    <span class="stat-label">Trusted Advisory</span>
+  </div>
+</div>
+
+<!-- ====== ABOUT ====== -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-img-wrap fade-in">
+      <div class="about-img-box">
+        <i class="fas fa-crown about-icon-center"></i>
+      </div>
+      <div class="about-badge">
+        <span class="about-badge-num">PEM</span>
+        <span class="about-badge-text">Trusted<br/>MGMT.</span>
+      </div>
+      <div class="about-deco-line"></div>
+    </div>
+    <div class="about-text fade-in">
+      <span class="section-tag">&#9670; Who We Are</span>
+      <h2 class="section-title">Driven by Purpose, <span>Built on Prudence</span></h2>
+      <div class="gold-line"></div>
+      <p>
+        Prudent Enlarge Management MGMT. is a premier management consultancy and coaching firm dedicated to delivering structured, results-oriented solutions across all dimensions of personal and organizational leadership.
+      </p>
+      <p>
+        We believe that <strong>prudent thinking</strong> is the foundation of every great outcome. Whether you're leading a team, navigating a career, or planning your next strategic move — we walk with you every step of the way.
+      </p>
+      <p>
+        Our approach is rooted in deep listening, strategic clarity, and purposeful execution. We don't just advise — we counsel, coach, and collaborate to bring your vision to life.
+      </p>
+      <div class="about-values">
+        <div class="value-item"><i class="fas fa-check-circle"></i> Strategic Thinking</div>
+        <div class="value-item"><i class="fas fa-check-circle"></i> Execution Planning</div>
+        <div class="value-item"><i class="fas fa-check-circle"></i> Personal Growth</div>
+        <div class="value-item"><i class="fas fa-check-circle"></i> Decision Clarity</div>
+        <div class="value-item"><i class="fas fa-check-circle"></i> Goal Setting</div>
+        <div class="value-item"><i class="fas fa-check-circle"></i> Problem Solving</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SERVICES ====== -->
+<section id="services">
+  <div class="services-header fade-in">
+    <span class="section-tag">&#9670; What We Offer</span>
+    <h2 class="section-title">Our <span>Services</span></h2>
+    <div class="gold-line center"></div>
+    <p>We offer a comprehensive suite of management and coaching services tailored to help you grow, lead, and achieve with confidence and clarity.</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card fade-in">
+      <div class="service-icon"><i class="fas fa-project-diagram"></i></div>
+      <h3>Project Management</h3>
+      <p>From inception to delivery, we guide projects with structured planning, clear milestones, and disciplined execution to ensure consistent results.</p>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon"><i class="fas fa-road"></i></div>
+      <h3>Road Management</h3>
+      <p>Strategic roadmap design for your organizational or personal journey — navigating transitions with precision and purpose.</p>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon"><i class="fas fa-users"></i></div>
+      <h3>Talent & Team Management</h3>
+      <p>We help you identify, develop, and manage talent effectively — building cohesive, high-performance teams aligned to your goals.</p>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon"><i class="fas fa-brain"></i></div>
+      <h3>Strategic Thinking</h3>
+      <p>Elevate your thinking beyond the immediate. We facilitate deep strategic conversations that sharpen vision and unlock transformational insight.</p>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon"><i class="fas fa-tasks"></i></div>
+      <h3>Execution Planning</h3>
+      <p>A brilliant strategy means nothing without action. We build detailed execution plans that turn ambitions into measurable achievements.</p>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon"><i class="fas fa-puzzle-piece"></i></div>
+      <h3>Problem Solving</h3>
+      <p>We apply systematic, creative, and analytical frameworks to deconstruct complex challenges and deliver practical, lasting solutions.</p>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon"><i class="fas fa-bullseye"></i></div>
+      <h3>Goal Setting</h3>
+      <p>We help you define clear, achievable, and purposeful goals — setting the compass for your personal and professional journey.</p>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon"><i class="fas fa-seedling"></i></div>
+      <h3>Personal Growth</h3>
+      <p>Our personal development programs are designed to build resilience, self-awareness, and momentum on your path to becoming your best self.</p>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon"><i class="fas fa-compass"></i></div>
+      <h3>Decision Clarity</h3>
+      <p>We guide you through critical decision-making processes with structured tools and prudent counsel, eliminating confusion and building confidence.</p>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon"><i class="fas fa-handshake"></i></div>
+      <h3>Advisory Services</h3>
+      <p>Trusted advisory support for leaders, entrepreneurs, and organizations — offering guidance, perspective, and strategic oversight when it matters most.</p>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon"><i class="fas fa-fire-alt"></i></div>
+      <h3>Motivational Counsel</h3>
+      <p>Reignite purpose and drive. Our motivational counseling sessions are powerful, personalized, and built to sustain lasting momentum.</p>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon"><i class="fas fa-user-tie"></i></div>
+      <h3>Career Coaching</h3>
+      <p>Whether you're starting, pivoting, or advancing — our career coaching empowers you to navigate your professional path with strategy and clarity.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== WHY US ====== -->
+<section id="why">
+  <div style="text-align:center; max-width:700px; margin:0 auto 56px; position:relative; z-index:1;" class="fade-in">
+    <span class="section-tag">&#9670; Why Choose Us</span>
+    <h2 class="section-title">The <span>Prudent</span> Advantage</h2>
+    <div class="gold-line center"></div>
+    <p style="color:var(--grey-mid); font-size:0.95rem; line-height:1.85;">"Prudent Talks" is more than a motto — it's our promise. Every engagement is thoughtful, intentional, and rooted in genuine care for your success.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card fade-in">
+      <i class="fas fa-shield-alt"></i>
+      <h4>Trusted Expertise</h4>
+      <p>Proven frameworks and deep experience across management disciplines give you the confidence to act decisively.</p>
+    </div>
+    <div class="why-card fade-in">
+      <i class="fas fa-user-check"></i>
+      <h4>Client-Centered Approach</h4>
+      <p>Every solution is tailored to your unique situation, goals, and context — no generic playbooks.</p>
+    </div>
+    <div class="why-card fade-in">
+      <i class="fas fa-lightbulb"></i>
+      <h4>Clarity Over Complexity</h4>
+      <p>We simplify the complex so you can focus on what matters most — making great decisions and taking bold action.</p>
+    </div>
+    <div class="why-card fade-in">
+      <i class="fas fa-chart-line"></i>
+      <h4>Results-Oriented</h4>
+      <p>We measure success by your success. From strategy to implementation, we're with you until the goal is achieved.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CONTACT ====== -->
+<section id="contact">
+  <div class="contact-wrap">
+    <div class="fade-in">
+      <span class="section-tag">&#9670; Reach Out</span>
+      <h2 class="section-title">Let's <span>Talk Prudently</span></h2>
+      <div class="gold-line"></div>
+      <div class="contact-info">
+        <p>Ready to take the next step? Reach out to us today and let's begin a conversation that moves you forward. Your growth starts with one prudent decision.</p>
+
+        <div class="contact-item">
+          <div class="contact-item-icon"><i class="fas fa-phone-alt"></i></div>
+          <div class="contact-item-info">
+            <label>Call Us</label>
+            <a href="tel:08149708585">08149708585</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-item-icon"><i class="fab fa-whatsapp"></i></div>
+          <div class="contact-item-info">
+            <label>WhatsApp</label>
+            <a href="https://wa.me/2348120049910" target="_blank">08120049910</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-item-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="contact-item-info">
+            <label>Brand</label>
+            <span>Prudent Enlarge Management MGMT.</span>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-item-icon"><i class="fas fa-quote-left"></i></div>
+          <div class="contact-item-info">
+            <label>Our Motto</label>
+            <span style="font-style:italic; color:var(--gold);">Prudent Talks</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form-wrap fade-in">
+      <h3>Send Us a Message</h3>
+      <form onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="John" required/>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Doe" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="john@example.com" required/>
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="+234 800 000 0000"/>
+        </div>
+        <div class="form-group">
+          <label>Service of Interest</label>
+          <select>
+            <option value="">Select a Service...</option>
+            <option>Project Management</option>
+            <option>Road Management</option>
+            <option>Talent & Team Management</option>
+            <option>Strategic Thinking</option>
+            <option>Execution Planning</option>
+            <option>Problem Solving</option>
+            <option>Goal Setting</option>
+            <option>Personal Growth</option>
+            <option>Decision Clarity</option>
+            <option>Advisory Services</option>
+            <option>Motivational Counsel</option>
+            <option>Career Coaching</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Your Message</label>
+          <textarea placeholder="Tell us about your needs or goals..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">
+          <i class="fas fa-paper-plane" style="margin-right:8px;"></i> Send Message
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo-wrap">
+        <div class="logo-main" style="color:#fff;">Prudent <span>Enlarge</span></div>
+        <div class="logo-sub">Management MGMT.</div>
+      </div>
+      <div class="footer-tagline">" Prudent Talks "</div>
+      <p>Empowering individuals and organizations through strategic management, advisory, and transformational coaching.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#services">Our Services</a></li>
+        <li><a href="#why">Why Choose Us</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <div class="footer-contact-item">
+        <i class="fas fa-phone-alt"></i>
+        <a href="tel:08149708585">08149708585</a>
+      </div>
+      <div class="footer-contact-item">
+        <i class="fab fa-whatsapp"></i>
+        <a href="https://wa.me/2348120049910" target="_blank">08120049910</a>
+      </div>
+      <div class="footer-contact-item">
+        <i class="fas fa-star"></i>
+        <span>Excellence in Every Engagement</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 <span>Prudent Enlarge Management MGMT.</span> — All Rights Reserved.</p>
+    <div class="social-links">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://wa.me/2348120049910" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp Float Button -->
+<a href="https://wa.me/2348120049910" class="whatsapp-float" target="_blank" title="Chat on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<script>
+  // Mobile Menu Toggle
+  function toggleMenu() {
+    const nav = document.getElementById('navLinks');
+    nav.classList.toggle('open');
+  }
+
+  // Close menu on link click
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+
+  // Scroll Fade-In
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 100 * (i % 4));
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Navbar Scroll Effect
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      navbar.style.padding = '12px 60px';
+      navbar.style.boxShadow = '0 4px 30px rgba(0,0,0,0.12)';
+    } else {
+      navbar.style.padding = '16px 60px';
+      navbar.style.boxShadow = '0 2px 20px rgba(201,168,76,0.12)';
+    }
+  });
+
+  // Form Submit Handler
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.innerHTML = '<i class="fas fa-check" style="margin-right:8px;"></i> Message Sent!';
+    btn.style.background = 'linear-gradient(135deg, #2ecc71, #27ae60)';
+    setTimeout(() => {
+      btn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right:8px;"></i> Send Message';
+      btn.style.background = '';
+      e.target.reset();
+    }, 3500);
+  }
+</script>
+</body>
+</html>
